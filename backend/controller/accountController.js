@@ -53,7 +53,6 @@ export const userbalance = async (req, res) => {
 
         return res.status(200).json({ amount: balance.balance })
 
-
     } catch (error) {
         console.log(error);
 

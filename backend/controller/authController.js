@@ -70,7 +70,8 @@ export const login = async (req, res) => {
 
         if (!loginValidation.success) {
             return res.status(400).json({
-                message: "Invalid Inputs"
+                message: "Invalid Inputs",
+                error:loginValidation.error
             })
         }
         const existingUser = await User.findOne({ email })
@@ -97,6 +98,7 @@ export const login = async (req, res) => {
         const token = jwt.sign({ email: existingUser.email, userId: existingUser._id }, jwtpassword, { expiresIn: "1d" })
 
         return res.status(200).json({
+            message:"User Logged in successfully",
             token,
             firstname: existingUser.firstname,
             lastname: existingUser.lastname
