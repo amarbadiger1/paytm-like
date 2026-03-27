@@ -69,7 +69,8 @@ export const transfer = async (req, res) => {
     try {
         session.startTransaction();
 
-        const { amount, to } = req.body;
+        const { amount } = req.body;
+        const to = req.params.id
         const userId = req.userId;
 
 
@@ -89,7 +90,7 @@ export const transfer = async (req, res) => {
             });
         }
 
-  
+
         const receiver = await Balance.findOne({ userId: to }).session(session);
 
         if (!receiver) {
@@ -99,7 +100,7 @@ export const transfer = async (req, res) => {
             });
         }
 
-    
+
         await Balance.updateOne(
             { userId },
             { $inc: { balance: -amount } },
@@ -130,3 +131,26 @@ export const transfer = async (req, res) => {
         session.endSession();
     }
 };
+
+
+
+export const getUserDetail = async (req, res) => {
+    try {
+        const userId = req.params.id
+        const user = await User.findById(userId).select("-password")
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found"
+            })
+        }
+
+        return res.status(200).json({ user })
+
+    } catch (error) {
+        console.log(error);
+
+        return res.status(500).json({
+            message: "Server Error"
+        })
+    }
+}

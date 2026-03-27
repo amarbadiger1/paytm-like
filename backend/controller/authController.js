@@ -13,7 +13,7 @@ const userSchema = z.object({
 
 const userLoginSchema = z.object({
     email: z.string(),
-    password: z.string().max(6)
+    password: z.string().min(6)
 })
 
 export const register = async (req, res) => {

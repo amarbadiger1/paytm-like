@@ -10,6 +10,7 @@ import { RecoilRoot } from "recoil"
 import Dashboard from './routes/Dashboard'
 import ProtectedRoute from "./components/ProtectedRoute"
 import PublicRoute from './components/PublicRoute'
+import Pay from './routes/Pay'
 const App = () => {
   return (
     <RecoilRoot>
@@ -18,10 +19,19 @@ const App = () => {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/dashboard' element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+          <Route path='/pay/:id' element={<ProtectedRoute><Pay /></ProtectedRoute>} />
           <Route path='/register' element={<PublicRoute><Register /></PublicRoute>} />
           <Route path='/login' element={<PublicRoute><Login /></PublicRoute>} />
         </Routes>
-        <ToastContainer />
+        <ToastContainer
+          position="bottom-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          closeOnClick
+          pauseOnHover
+          draggable
+          theme="colored"
+        />
       </BrowserRouter>
     </RecoilRoot>
   )
